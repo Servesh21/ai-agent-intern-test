@@ -22,12 +22,12 @@ Tracking bugs, discrepancies, and unexpected behaviors discovered during develop
 
 ---
 
-### Bug 3: Gemini API 404 on deprecated `gemini-2.0-flash` model endpoint
-- **How I reproduced it:** Instantiated `SupportAgent` and initiated a conversation turn.
-- **Root cause:** `models/gemini-2.0-flash` was deprecated/sunset on the current API tier and replaced by `models/gemini-2.5-flash`.
-- **Fix:** Updated `GENERATION_MODEL` in `agent/config.py` to `gemini-2.5-flash`.
+### Bug 3: Gemini API 404 on sunset model endpoints (gemini-2.0-flash / gemini-2.5-flash)
+- **How I reproduced it:** Instantiated `SupportAgent` and initiated a conversation turn with `gemini-2.0-flash` or `gemini-2.5-flash`.
+- **Root cause:** Previous model generations were sunset by Google and replaced by `models/gemini-3.6-flash`.
+- **Fix:** Updated `GENERATION_MODEL` in `agent/config.py` to `gemini-3.6-flash`.
 - **Regression test:** `evaluation/test_visible_cases.py::test_visible_case[standard-return-window]`
-- **Found via:** My own testing during initial agent chat verification.
+- **Found via:** Test execution failure showing 404 `NOT_FOUND` message from Gemini API.
 
 ---
 

@@ -167,7 +167,7 @@ pytest tests/ evaluation/ -v
 - **Tradeoff vs In-Memory Array:** An in-memory cosine array would be simpler, but ChromaDB provides standard HNSW indexing and metadata filtering schemas that mirror production vector databases.
 
 ### LLM & Embeddings: Google Gemini API (`google-genai` SDK)
-- **Why Gemini API only?** Using `gemini-2.5-flash` for generation/tool-calling and `gemini-embedding-001` for vector embeddings guarantees a single API key dependency with no second provider bolted on.
+- **Why Gemini API only?** Using `gemini-3.6-flash` for generation/tool-calling and `gemini-embedding-001` for vector embeddings guarantees a single API key dependency with no second provider bolted on.
 - **Tradeoff:** The Gemini free tier has a 5 requests-per-minute (RPM) quota on generation calls. To address this, we implemented automatic `_generate_with_retry` with exponential backoff and `retryDelay` extraction in `agent/agent_loop.py`.
 
 ### Build vs. Buy: Direct Python vs. LangChain/LangGraph/LlamaIndex
