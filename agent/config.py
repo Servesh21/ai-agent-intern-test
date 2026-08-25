@@ -24,7 +24,7 @@ def get_gemini_api_key() -> str:
     return key
 
 # --- Models ---
-GENERATION_MODEL = "gemini-3.6-flash"
+GENERATION_MODEL = "gemini-3.5-flash-lite"
 EMBEDDING_MODEL = "gemini-embedding-001"
 
 # --- Retrieval ---

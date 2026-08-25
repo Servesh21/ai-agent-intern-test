@@ -23,7 +23,7 @@ def main():
     console.print(
         Panel.fit(
             "[bold cyan]Aster & Row AI Support Agent[/bold cyan]\n"
-            "[dim]Powered by Gemini 2.0 Flash + ChromaDB | Type 'exit' or 'quit' to quit, 'new' for new session[/dim]",
+            "[dim]Product and order support, grounded in our policies | Type 'exit' or 'quit' to quit, 'new' for new session[/dim]",
             border_style="cyan",
         )
     )

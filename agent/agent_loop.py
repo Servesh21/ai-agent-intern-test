@@ -164,7 +164,7 @@ class SupportAgent:
                 )
                 contents.append(
                     types.Content(
-                        role="tool",
+                        role="user",
                         parts=[tool_response_part],
                     )
                 )

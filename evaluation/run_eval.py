@@ -8,6 +8,10 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 from rich.console import Console
 from rich.table import Table
 
@@ -129,6 +133,7 @@ def evaluate_case(agent: SupportAgent, case: dict[str, Any]) -> dict[str, Any]:
         return {
             "id": case_id,
             "category": category,
+            "user_message": case["messages"][-1]["content"],
             "passed": passed,
             "failures": failures,
             "latency": latency,
@@ -138,6 +143,7 @@ def evaluate_case(agent: SupportAgent, case: dict[str, Any]) -> dict[str, Any]:
         return {
             "id": case_id,
             "category": category,
+            "user_message": case["messages"][-1]["content"],
             "passed": False,
             "failures": [f"Exception during execution: {str(e)}"],
             "latency": time.time() - start_time,
@@ -165,30 +171,29 @@ def main():
     results = []
     category_counts = defaultdict(lambda: {"total": 0, "passed": 0})
 
-    case_table = Table(title="Test Case Results", show_header=True, header_style="bold magenta", box=None)
-    case_table.add_column("Case ID", style="dim", width=36)
-    case_table.add_column("Category", style="cyan", width=24)
-    case_table.add_column("Status", width=10)
-    case_table.add_column("Latency", justify="right", width=10)
-
-    for case in all_cases:
+    for case_index, case in enumerate(all_cases):
+        print(f"--- Running Case: {case['id']} ({case.get('category', 'general')}) ---")
         res = evaluate_case(agent, case)
         results.append(res)
         cat = res["category"]
         category_counts[cat]["total"] += 1
+        print(f"User: {res['user_message']}")
+        print(f"Agent: {res['response']}")
         if res["passed"]:
             category_counts[cat]["passed"] += 1
-            case_table.add_row(res["id"], cat, "[green]PASSED[/green]", f"{res['latency']:.2f}s")
+            print("PASS")
         else:
-            case_table.add_row(res["id"], cat, "[red]FAILED[/red]", f"{res['latency']:.2f}s")
-            for f in res["failures"]:
-                case_table.add_row(f"  |-- [dim red]{f}[/dim red]", "", "", "")
-        
-        # Polite delay to stay comfortably under API quotas
-        time.sleep(2.0)
+            print("FAIL")
+            for failure in res["failures"]:
+                print(f"  - {failure}")
+        print(f"Latency: {res['latency']:.2f}s")
 
-    console.print(case_table)
-    console.print("\n")
+        # Polite delay to stay comfortably under API quotas.
+        if case_index < len(all_cases) - 1:
+            print("(waiting 2s for rate limit...)\n")
+            time.sleep(2.0)
+
+    print("\n=== Evaluation Summary ===\n")
 
     # Category Summary Table
     cat_table = Table(title="Category Summary", show_header=True, header_style="bold yellow", box=None)

@@ -221,8 +221,8 @@ Below are 6 documented failures discovered during development and testing, track
 
 ### Bug 3: Gemini API 404 on deprecated `gemini-2.0-flash`
 - **How reproduced:** Initiated a conversation turn with `gemini-2.0-flash`.
-- **Root cause:** `models/gemini-2.0-flash` was deprecated on the current API tier and replaced by `models/gemini-2.5-flash`.
-- **Fix:** Updated `GENERATION_MODEL` in `agent/config.py` to `gemini-2.5-flash`.
+- **Root cause:** `models/gemini-2.0-flash` was deprecated on the current API tier and replaced by `models/gemini-3.5-flash-lite`.
+- **Fix:** Updated `GENERATION_MODEL` in `agent/config.py` to `gemini-3.5-flash-lite`.
 - **Regression test:** `evaluation/test_visible_cases.py::test_visible_case[standard-return-window]`.
 - **Found via:** Initial agent chat verification.
 

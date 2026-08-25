@@ -221,23 +221,158 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+
+    :root {
+      --canvas: #e8e5dc;
+      --surface: #fbfaf6;
+      --surface-tint: #f2f0e9;
+      --ink: #18231f;
+      --line: #d9d8cf;
+      --forest: #21483b;
+      --forest-dark: #16352c;
+      --lime: #c5d86d;
+      --coral: #d9684b;
+      --coral-dark: #bd5038;
+    }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      min-height: 100vh;
+      height: auto;
+      padding: 3vh 4vw;
+    }
+
+    .chat-container {
+      width: min(1120px, 100%);
+      height: min(900px, 94vh);
+      background: var(--surface);
+      border: 1px solid rgba(24, 35, 31, 0.12);
+      border-radius: 10px;
+      box-shadow: 0 24px 60px rgba(37, 47, 41, 0.14);
+    }
+
+    .chat-header {
+      padding: 22px 30px;
+      background: var(--forest);
+      border-bottom: 4px solid var(--lime);
+      gap: 20px;
+    }
+
+    .brand { gap: 14px; }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--lime);
+      color: var(--forest-dark);
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .brand-text h1 { letter-spacing: -0.02em; }
+    .brand-text p { color: #c6d3c6; }
+
+    .availability {
+      color: #dce8d9;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+    .availability::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--lime);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(197, 216, 109, 0.16);
+    }
+
+    .chat-messages {
+      padding: 38px clamp(22px, 6vw, 76px);
+      gap: 24px;
+      background: var(--surface);
+    }
+    .message { max-width: min(720px, 88%); animation: fadeIn 0.35s ease-out both; }
+    .bubble { padding: 16px 19px; border-radius: 8px; }
+    .message.user .bubble { background: var(--coral); }
+    .message.bot .bubble { background: var(--surface-tint); color: var(--ink); border-color: var(--line); }
+    .bubble h1, .bubble h2, .bubble h3 { margin: 0 0 10px; line-height: 1.25; }
+    .bubble h3 { color: var(--forest); font-size: 1rem; }
+    .bubble p { margin: 0 0 10px; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .bubble ul { margin: 0 0 10px 20px; }
+    .bubble li { margin: 4px 0; }
+    .bubble strong { color: var(--forest-dark); font-weight: 700; }
+
+    .chat-input-area {
+      padding: 18px clamp(22px, 6vw, 76px) 24px;
+      background: var(--surface-tint);
+      border-top-color: var(--line);
+    }
+    .chat-input { background: var(--surface); border-color: #c5c9bd; border-radius: 6px; color: var(--ink); }
+    .chat-input:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(33, 72, 59, 0.1); }
+    .send-button { min-width: 108px; background: var(--forest); border-radius: 6px; }
+    .send-button:hover { background: var(--forest-dark); }
+
+    .welcome-label {
+      color: var(--coral-dark);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .quick-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .quick-action {
+      border: 1px solid #cfd6c7;
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: transparent;
+      color: var(--forest);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.78rem;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .quick-action:hover { background: #e9efca; border-color: #b7c77c; transform: translateY(-1px); }
+
+    @media (max-width: 600px) {
+      body { padding: 0; }
+      .chat-container { height: 100vh; border: 0; border-radius: 0; }
+      .chat-header { padding: 18px 20px; }
+      .brand-text p { display: none; }
+      .availability { font-size: 0; }
+      .chat-messages { padding: 28px 18px; }
+      .message { max-width: 94%; }
+      .chat-input-area { padding: 14px 18px 18px; }
+      .send-button { min-width: 72px; padding-inline: 14px; }
+    }
   </style>
 </head>
 <body>
   <div class="chat-container">
     <div class="chat-header">
       <div class="brand">
-        <div class="brand-icon">🌿</div>
+        <div class="brand-icon">A&amp;R</div>
         <div class="brand-text">
           <h1>Aster &amp; Row AI Support</h1>
-          <p>Grounded RAG &bull; Gemini 2.0 Flash &bull; ChromaDB</p>
+          <p>Product and order support, grounded in our policies</p>
         </div>
       </div>
+      <div class="availability">Support desk online</div>
     </div>
 
     <div class="chat-messages" id="messages">
       <div class="message bot">
-        <div class="bubble">Hello! I'm the Aster &amp; Row AI Support Assistant. How can I help you with our products, returns, shipping, or order status today?</div>
+        <div class="bubble"><div class="welcome-label">Welcome to Aster &amp; Row</div>Hello! I can help with products, returns, shipping, or order status. What can I look into for you?</div>
+        <div class="quick-actions" aria-label="Suggested questions">
+          <button type="button" class="quick-action" data-query="What is your return policy?">Return policy</button>
+          <button type="button" class="quick-action" data-query="Where is my order ORD-1007?">Track an order</button>
+          <button type="button" class="quick-action" data-query="How much does domestic shipping cost?">Shipping rates</button>
+        </div>
       </div>
     </div>
 
@@ -254,13 +389,41 @@
     const sendBtn = document.getElementById('sendBtn');
     let sessionId = 'session_' + Math.random().toString(36).substring(2, 9);
 
+    document.querySelectorAll('.quick-action').forEach((button) => {
+      button.addEventListener('click', () => {
+        userInput.value = button.dataset.query;
+        userInput.focus();
+      });
+    });
+
+    function renderMarkdown(text) {
+      const escaped = text.replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[character]));
+
+      return escaped
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+        .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>')
+        .replace(/\n{2,}/g, '<br><br>')
+        .replace(/\n/g, '<br>');
+    }
+
     function appendMessage(text, role, metadata = null) {
       const msgDiv = document.createElement('div');
       msgDiv.className = `message ${role}`;
 
       const bubble = document.createElement('div');
       bubble.className = 'bubble';
-      bubble.textContent = text;
+      if (role === 'bot') {
+        bubble.innerHTML = renderMarkdown(text);
+      } else {
+        bubble.textContent = text;
+      }
       msgDiv.appendChild(bubble);
 
       if (metadata && role === 'bot' && metadata.handoff_recommended) {
