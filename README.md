@@ -3,7 +3,7 @@
 An enterprise-grade, grounded customer support RAG agent built for **Aster & Row** (e-commerce for bags, drinkware, and travel accessories). Built directly with the **Google Gemini API** (`google-genai` Python SDK) and **ChromaDB** in local persistent mode — strictly avoiding heavy frameworks like LangChain/LangGraph to maintain 100% deterministic inspectability, strict privacy guardrails, and granular precedence filtering.
 
 ---
-
+## Demo Video https://www.loom.com/share/2e6af0fbbd9f4140ae3e6cbcb7b11723
 ## Quick Start (Clean Setup & Run)
 
 ### 1. Prerequisites
